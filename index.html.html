@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Tournoi Choix</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+			background: #002222;
+			margin: 0;
+			padding: 2rem;
+		}
+
+		h1 {
+			color: #eeffee;             /* Couleur du texte */
+			font-family: 'Verdana', sans-serif;  /* Police */
+			font-size: 40px;            /* Taille */
+			font-weight: bold;          /* Gras */
+			text-align: center;         /* Centrage */
+			line-height: 1.5;           /* Hauteur de ligne */
+			margin: 20px;               /* Marge autour */
+
+
+		}
+
+		.choice-container {
+			display: flex;
+			justify-content: center;
+			gap: 2rem;
+			margin-bottom: 2rem;
+		}
+
+		.choice {
+			background: #0c1;
+			border: 3px solid #000;
+			border-radius: 12px;
+			padding: 1.5rem 2rem;
+			cursor: pointer;
+			transition: 0.3s;
+			width: 200px;
+		}
+
+		.choice:hover {
+			border-color: #000000;
+			background: #e6f0ff;
+		}
+
+		.result {
+			color: #eeffee;             /* Couleur du texte */
+			font-family: 'Verdana', sans-serif;  /* Police */
+			font-size: 55px;            /* Taille */
+			font-weight: bold;          /* Gras */
+			text-align: center;         /* Centrage */
+			line-height: 1.5;           /* Hauteur de ligne */
+			margin: 10px;               /* Marge autour */
+
+		margin-top: 2rem;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Quel est ton artiste / groupe préféré ?</h1>
+
+	<div class="choice-container" id="choices">
+		<!-- Choix dynamiques -->
+	</div>
+
+	<div class="result" id="result"></div>
+
+	<script>
+		const options = [
+			"Amir",
+			"Slimane",
+			"The Weekend"
+		];
+
+		let round = [...options];
+		let nextRound = [];
+		let currentIndex = 0;
+
+		const choicesDiv = document.getElementById("choices");
+		const resultDiv = document.getElementById("result");
+
+		function showChoices() {
+			if (round.length === 1) {
+				// Afficher le gagnant
+				choicesDiv.result = '';
+				resultDiv.textContent = `🎉 Le grand gagnant est : ${round[0]} !🎉`;
+				return;
+			}
+
+			if (currentIndex >= round.length) {
+				// Passer au tour suivant
+				round = [...nextRound];
+				nextRound = [];
+				currentIndex = 0;
+			}
+
+			const choice1 = round[currentIndex];
+			const choice2 = round[currentIndex + 1];
+
+			choicesDiv.innerHTML = `
+				<div class="choice" onclick="choose('${choice1}')">${choice1}</div>
+				<div class="choice" onclick="choose('${choice2}')">${choice2}</div>
+			`;
+		}
+
+		function choose(winner) {
+			nextRound.push(winner);
+			currentIndex += 2;
+			showChoices();
+		}
+
+		showChoices();
+	</script>
+
+</body>
+</html>
